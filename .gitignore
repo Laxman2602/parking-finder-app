@@ -1,0 +1,14 @@
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.vite/
+
+# Backend
+backend/node_modules/
+backend/.env
+backend/images/
+
+# OS files
+.DS_Store
+*.log
