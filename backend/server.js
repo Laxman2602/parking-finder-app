@@ -12,6 +12,9 @@ const cron = require('node-cron');
 const multer = require('multer');
 const path = require('path');
 
+// ========== FORCE SSL FOR POSTGRESQL (FIX FOR NEON) ==========
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const app = express();
 
 // ========== UPDATED CORS FOR DEPLOYMENT ==========
@@ -55,12 +58,17 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
+// ========== DATABASE CONNECTION WITH SSL FOR NEON ==========
 const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   database: process.env.DB_NAME,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false
+  }
 });
 
 pool.connect((err) => {
