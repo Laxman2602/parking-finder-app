@@ -750,13 +750,16 @@ app.post('/api/auth/reset-password', async (req, res) => {
   }
 });
 
-// ========== UPDATED SERVER LISTENING FOR DEPLOYMENT ==========
+// ========== UPDATED SERVER LISTENING FOR DEPLOYMENT (FIXED) ==========
 const PORT = process.env.PORT || 5001;
 
-// For local development - runs the server
-if (process.env.NODE_ENV !== 'production') {
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}
+// Start the server (always listen, regardless of environment)
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
 
-// Export for serverless platforms (Vercel)
-module.exports = app;
+// Export for serverless platforms (Vercel) - only if needed
+if (process.env.NODE_ENV === 'production' && process.env.VERCEL) {
+  module.exports = app;
+}
