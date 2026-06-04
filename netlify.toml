@@ -1,0 +1,8 @@
+[build]
+  base = "frontend"
+  package = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  VITE_API_URL = "https://parking-finder-app-1.onrender.com/api"
