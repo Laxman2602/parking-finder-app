@@ -17,9 +17,15 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const app = express();
 
-// ========== UPDATED CORS FOR DEPLOYMENT (ALLOW VERCEL FRONTEND) ==========
+// ========== UPDATED CORS FOR DEPLOYMENT (ALLOW VERCEL & NETLIFY FRONTENDS) ==========
 app.use(cors({ 
-  origin: ['http://localhost:5173', 'https://parking-finder-app-kohl.vercel.app', 'https://parking-finder-app-*.vercel.app'],
+  origin: [
+    'http://localhost:5173',
+    'https://parking-finder-app-kohl.vercel.app',
+    'https://parking-finder-app-*.vercel.app',
+    'https://parking-finder-clean-v2.netlify.app',
+    'https://*.netlify.app'
+  ],
   credentials: true 
 }));
 app.use(express.json());
