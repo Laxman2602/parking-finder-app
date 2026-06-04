@@ -1,5 +1,6 @@
-// Use environment variable for API URL (production) or fallback to localhost (development)
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Use environment variable for API URL (production) or fallback to localhost
+// const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = 'https://parking-finder-app-1.onrender.com/api';
 
 export const api = {
   // Auth
@@ -106,6 +107,31 @@ export const api = {
       'Authorization': `Bearer ${token}` 
     },
     body: JSON.stringify(data)
+  }).then(res => res.json()),
+
+  // Get all bookings for owner
+  getOwnerBookings: (token) => fetch(`${API_URL}/owner/bookings`, {
+    method: 'GET',
+    headers: { 'Authorization': `Bearer ${token}` }
+  }).then(res => res.json()),
+
+  // Update slot status (owner)
+  updateSlotStatus: (token, slotId, status) => fetch(`${API_URL}/owner/slots/${slotId}`, {
+    method: 'PUT',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}` 
+    },
+    body: JSON.stringify({ status })
+  }).then(res => res.json()),
+
+  // Upload image (owner)
+  uploadImage: (token, formData) => fetch(`${API_URL}/owner/upload-image`, {
+    method: 'POST',
+    headers: { 
+      'Authorization': `Bearer ${token}` 
+    },
+    body: formData
   }).then(res => res.json()),
 };
 
