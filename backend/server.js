@@ -13,8 +13,22 @@ const multer = require('multer');
 const path = require('path');
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+
+// ========== UPDATED CORS FOR DEPLOYMENT ==========
+app.use(cors({ 
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true 
+}));
 app.use(express.json());
+
+// ========== HEALTH CHECK ENDPOINT FOR RENDER ==========
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    message: 'Server is running',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // ========== SERVE STATIC IMAGES ==========
 app.use('/images', express.static('images'));
@@ -732,5 +746,13 @@ app.post('/api/auth/reset-password', async (req, res) => {
   }
 });
 
+// ========== UPDATED SERVER LISTENING FOR DEPLOYMENT ==========
 const PORT = process.env.PORT || 5001;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// For local development - runs the server
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+// Export for serverless platforms (Vercel)
+module.exports = app;
