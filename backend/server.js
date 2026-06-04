@@ -58,13 +58,9 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-// ========== DATABASE CONNECTION WITH SSL FOR NEON ==========
+// ========== DATABASE CONNECTION WITH SSL FOR NEON (UPDATED TO USE DATABASE_URL) ==========
 const pool = new Pool({
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
+  connectionString: process.env.DATABASE_URL || `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
   ssl: {
     require: true,
     rejectUnauthorized: false
