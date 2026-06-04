@@ -17,9 +17,9 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 const app = express();
 
-// ========== UPDATED CORS FOR DEPLOYMENT ==========
+// ========== UPDATED CORS FOR DEPLOYMENT (ALLOW VERCEL FRONTEND) ==========
 app.use(cors({ 
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: ['http://localhost:5173', 'https://parking-finder-app-kohl.vercel.app', 'https://parking-finder-app-*.vercel.app'],
   credentials: true 
 }));
 app.use(express.json());
