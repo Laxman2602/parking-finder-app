@@ -1,4 +1,4 @@
-// Hardcoded backend URL - DO NOT CHANGE
+// DIRECT HARDCODE - NO ENVIRONMENT VARIABLES
 const API_URL = 'https://parking-finder-app-1.onrender.com/api';
 
 export const api = {
@@ -129,4 +129,4 @@ export const api = {
   }).then(res => res.json()),
 };
 
-export default api; 
+export default api;
